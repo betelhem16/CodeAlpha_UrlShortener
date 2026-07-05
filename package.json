@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/app.ts",
-  "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,8 @@
   "homepage": "https://github.com/betelhem16/CodeAlpha_UrlShortener#readme",
   "dependencies": {
     "@prisma/client": "^6.19.3",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
