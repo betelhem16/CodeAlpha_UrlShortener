@@ -50,3 +50,24 @@ export async function redirectToUrl(req: Request, res: Response) {
 
   return res.redirect(302, url.longUrl);
 }
+export async function getUrlStats(req: Request, res: Response) {
+  const { shortCode } = req.params;
+
+  if (typeof shortCode !== "string") {
+    return res.status(400).json({ error: "Invalid short code" });
+  }
+
+  const url = await prisma.url.findUnique({
+    where: { shortCode },
+  });
+
+  if (!url) {
+    return res.status(404).json({ error: "Short URL not found" });
+  }
+
+  return res.status(200).json({
+    longUrl: url.longUrl,
+    visitCount: url.visitCount,
+    createdAt: url.createdAt,
+  });
+}
