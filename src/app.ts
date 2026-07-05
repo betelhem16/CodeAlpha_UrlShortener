@@ -1,11 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
-
+import urlRoutes from "./routes/urls";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Global middleware
 app.use(express.json());
-
+app.use("/api", urlRoutes);
 // Health check — trivial, but every real service should have one
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok" });
