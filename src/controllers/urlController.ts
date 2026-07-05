@@ -25,3 +25,28 @@ export async function shortenUrl(req: Request, res: Response) {
     longUrl: created.longUrl,
   });
 }
+export async function redirectToUrl(req: Request, res: Response) {
+  const { shortCode } = req.params;
+
+  if (typeof shortCode !== "string") {
+    return res.status(400).json({ error: "Invalid short code" });
+  }
+
+  const url = await prisma.url.findUnique({
+    where: { shortCode },
+  });
+
+  if (!url) {
+    return res.status(404).json({ error: "Short URL not found" });
+  }
+
+  await prisma.url.update({
+    where: { shortCode },
+    data: {
+      visitCount: { increment: 1 },
+      lastVisitedAt: new Date(),
+    },
+  });
+
+  return res.redirect(302, url.longUrl);
+}

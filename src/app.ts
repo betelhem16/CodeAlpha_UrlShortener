@@ -1,18 +1,20 @@
 import express, { Request, Response, NextFunction } from "express";
 import urlRoutes from "./routes/urls";
+import redirectRoutes from "./routes/redirect";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Global middleware
 app.use(express.json());
-app.use("/api", urlRoutes);
-// Health check — trivial, but every real service should have one
+
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok" });
 });
-
+app.use("/api", urlRoutes);
+// Health check — trivial, but every real service should have one
+app.use("/", redirectRoutes);  
 // Routes will be mounted here as we build them
-// app.use("/api", urlRoutes);
+
 
 // 404 handler — catches any request that didn't match a route above
 app.use((req: Request, res: Response) => {
