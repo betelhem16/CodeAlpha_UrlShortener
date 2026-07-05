@@ -1,7 +1,5 @@
 import crypto from "crypto";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../models/prismaClient";
 const CODE_LENGTH = 7;
 const MAX_RETRIES = 5;
 
