@@ -53,3 +53,23 @@ describe("GET /:shortCode", () => {
     expect(response.status).toBe(404);
   });
 });
+
+describe("GET /api/stats/:shortCode", () => {
+  it("returns stats for an existing short code", async () => {
+    await prisma.url.create({
+      data: { shortCode: "stats123", longUrl: "https://example.com", visitCount: 5 },
+    });
+
+    const response = await request(app).get("/api/stats/stats123");
+
+    expect(response.status).toBe(200);
+    expect(response.body.longUrl).toBe("https://example.com");
+    expect(response.body.visitCount).toBe(5);
+    expect(response.body).toHaveProperty("createdAt");
+  });
+
+  it("returns 404 for a nonexistent short code", async () => {
+    const response = await request(app).get("/api/stats/doesnotexist");
+    expect(response.status).toBe(404);
+  });
+});
