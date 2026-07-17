@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
 
+interface Stats {
+  shortUrl: string;
+  longUrl: string;
+  visitCount: number;
+  createdAt: string;
+}
+
 function App() {
   const [longUrl, setLongUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -7,6 +14,8 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
+  const [selectedStats, setSelectedStats] = useState<Stats | null>(null);
+  const [statsError, setStatsError] = useState<string | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("urlHistory");
@@ -55,6 +64,27 @@ function App() {
     setTimeout(() => setCopied(false), 2000);
   }
 
+  async function handleViewStats(url: string) {
+    const shortCode = url.split("/").pop();
+    if (!shortCode) return;
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/stats/${shortCode}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        setStatsError(data.error || "Could not load stats");
+        setSelectedStats(null);
+        return;
+      }
+
+      setSelectedStats({ shortUrl: url, ...data });
+      setStatsError(null);
+    } catch (err) {
+      setStatsError("Could not reach the server");
+    }
+  }
+
   return (
     <div>
       <h1>URL Shortener</h1>
@@ -86,9 +116,21 @@ function App() {
             {history.map((url) => (
               <li key={url}>
                 <a href={url} target="_blank">{url}</a>
+                <button onClick={() => handleViewStats(url)}>View Stats</button>
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {statsError && <p style={{ color: "red" }}>{statsError}</p>}
+
+      {selectedStats && (
+        <div>
+          <h3>Stats for {selectedStats.shortUrl}</h3>
+          <p>Original URL: {selectedStats.longUrl}</p>
+          <p>Visits: {selectedStats.visitCount}</p>
+          <p>Created: {new Date(selectedStats.createdAt).toLocaleString()}</p>
         </div>
       )}
     </div>
