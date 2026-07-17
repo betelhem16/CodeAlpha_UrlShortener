@@ -5,7 +5,143 @@
 }
 
 body {
-  font-family: system-ui, sans-serif;
-  background: #f5f5f5;
-  color: #1a1a1a;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 560px;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+button {
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: none;
+  background: #6366f1;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background: #4f46e5;
+}
+
+button:disabled {
+  background: #475569;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #f87171;
+  margin-bottom: 1rem;
+}
+
+.result {
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.result a {
+  color: #818cf8;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.result button {
+  flex-shrink: 0;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+h2, h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+li a {
+  color: #818cf8;
+  text-decoration: none;
+  word-break: break-all;
+  font-size: 0.9rem;
+}
+
+li button {
+  flex-shrink: 0;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  background: #334155;
+}
+
+li button:hover {
+  background: #475569;
+}
+
+.stats {
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.stats p {
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: #cbd5e1;
 }

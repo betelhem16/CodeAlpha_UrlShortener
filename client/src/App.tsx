@@ -85,56 +85,56 @@ function App() {
     }
   }
 
-  return (
-    <div>
-      <h1>URL Shortener</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Paste a long URL..."
-          value={longUrl}
-          onChange={(e) => setLongUrl(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Shortening..." : "Shorten"}
-        </button>
-      </form>
+ return (
+  <div className="container">
+    <h1>URL Shortener</h1>
+   <form onSubmit={handleSubmit}>
+  <input
+    type="text"
+    placeholder="Paste a long URL..."
+    value={longUrl}
+    onChange={(e) => setLongUrl(e.target.value)}
+  />
+  <button type="submit" disabled={loading}>
+    {loading ? "Shortening..." : "Shorten"}
+  </button>
+</form>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    {error && <p className="error">{error}</p>}
 
-      {shortUrl && (
-        <p>
-          Short URL: <a href={shortUrl} target="_blank">{shortUrl}</a>
-          <button onClick={handleCopy}>{copied ? "Copied!" : "Copy"}</button>
-        </p>
-      )}
+    {shortUrl && (
+      <p className="result">
+        <a href={shortUrl} target="_blank">{shortUrl}</a>
+        <button onClick={handleCopy}>{copied ? "Copied!" : "Copy"}</button>
+      </p>
+    )}
 
-      {history.length > 0 && (
-        <div>
-          <h2>History</h2>
-          <ul>
-            {history.map((url) => (
-              <li key={url}>
-                <a href={url} target="_blank">{url}</a>
-                <button onClick={() => handleViewStats(url)}>View Stats</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+    {history.length > 0 && (
+      <div>
+        <h2>History</h2>
+        <ul>
+          {history.map((url) => (
+            <li key={url}>
+              <a href={url} target="_blank">{url}</a>
+              <button onClick={() => handleViewStats(url)}>View Stats</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
 
-      {statsError && <p style={{ color: "red" }}>{statsError}</p>}
+    {statsError && <p className="error">{statsError}</p>}
 
-      {selectedStats && (
-        <div>
-          <h3>Stats for {selectedStats.shortUrl}</h3>
-          <p>Original URL: {selectedStats.longUrl}</p>
-          <p>Visits: {selectedStats.visitCount}</p>
-          <p>Created: {new Date(selectedStats.createdAt).toLocaleString()}</p>
-        </div>
-      )}
-    </div>
-  );
+    {selectedStats && (
+      <div className="stats">
+        <h3>Stats for {selectedStats.shortUrl}</h3>
+        <p>Original URL: {selectedStats.longUrl}</p>
+        <p>Visits: {selectedStats.visitCount}</p>
+        <p>Created: {new Date(selectedStats.createdAt).toLocaleString()}</p>
+      </div>
+    )}
+  </div>
+);
 }
 
 export default App;
