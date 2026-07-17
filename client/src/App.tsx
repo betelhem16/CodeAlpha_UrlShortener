@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [longUrl, setLongUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [shortUrl, setShortUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false); // NEW — add this line here
+  const [copied, setCopied] = useState(false);
+  const [history, setHistory] = useState<string[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("urlHistory");
+    if (saved) {
+      setHistory(JSON.parse(saved));
+    }
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -28,6 +36,10 @@ function App() {
       }
 
       setShortUrl(data.shortUrl);
+
+      const updatedHistory = [data.shortUrl, ...history];
+      setHistory(updatedHistory);
+      localStorage.setItem("urlHistory", JSON.stringify(updatedHistory));
     } catch (err) {
       console.error("FETCH FAILED:", err);
       setError("Could not reach the server");
@@ -36,7 +48,6 @@ function App() {
     }
   }
 
-  // NEW — add this whole function here, right after handleSubmit
   function handleCopy() {
     if (!shortUrl) return;
     navigator.clipboard.writeText(shortUrl);
@@ -66,6 +77,19 @@ function App() {
           Short URL: <a href={shortUrl} target="_blank">{shortUrl}</a>
           <button onClick={handleCopy}>{copied ? "Copied!" : "Copy"}</button>
         </p>
+      )}
+
+      {history.length > 0 && (
+        <div>
+          <h2>History</h2>
+          <ul>
+            {history.map((url) => (
+              <li key={url}>
+                <a href={url} target="_blank">{url}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
