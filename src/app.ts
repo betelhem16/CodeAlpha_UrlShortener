@@ -1,7 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
 import urlRoutes from "./routes/urls";
 import redirectRoutes from "./routes/redirect";
+import cors from "cors";
 const app = express();
+app.use(cors({
+  origin: "http://localhost:5173",
+}));
 const PORT = process.env.PORT || 3000;
 
 // Global middleware

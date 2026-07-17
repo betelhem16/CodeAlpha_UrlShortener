@@ -22,3 +22,21 @@ A backend service that shortens long URLs into unique, randomly generated short 
 - **Rate limiting:** express-rate-limit
 
 ## Project Structure
+## Frontend
+
+A React + TypeScript frontend lives in `client/`, built with Vite.
+
+**Features:**
+- Shorten URLs with real-time validation feedback
+- Copy-to-clipboard for generated short URLs
+- Persistent history (via localStorage)
+- Per-link visit stats lookup
+- Dark theme UI
+
+### Frontend Setup
+```bash
+cd client
+npm install
+npm run dev
+```
+Runs on `http://localhost:5173`. Requires the backend running simultaneously on `http://localhost:3000` (CORS is configured to allow this specific origin).
